@@ -1,0 +1,126 @@
+# Here we define our query as a multi-line string
+query = '''
+query ($id: Int) { # Define which variables will be used in the query (id)
+  Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+    id
+    title {
+      romaji
+      english
+      native
+    }
+  }
+}
+'''
+
+# Define our query variables and values that will be used in the query request
+variables = {
+    'id': 15125
+    'search': anime_title
+}
+
+url = 'https://graphql.anilist.co'
+
+# Make the HTTP Api request
+response = requests.post(url, json={'query': query, 'variables': variables})
+
+
+{
+  Media(type: ANIME, search: "Fullmetal") {
+    id
+    title {
+      romaji
+      english
+      native
+      userPreferred
+    }
+    startDate {
+      year
+      month
+      day
+    }
+    endDate {
+      year
+      month
+      day
+    }
+    season
+    seasonYear
+    type
+    format
+    status
+    episodes
+    duration
+    chapters
+    volumes
+    isAdult
+    genres
+    tags {
+      name
+      rank
+      category
+    }
+    isLicensed
+    averageScore
+    popularity
+    source
+    countryOfOrigin
+    format
+    duration
+    chapters
+    volumes
+    averageScore
+    popularity
+    source
+    staff {
+      edges {
+        id
+        node {
+          id
+          name {
+            first
+            last
+            full
+            native
+          }
+        }
+        role
+      }
+    }
+    studios {
+      edges {
+        id
+        node {
+          id
+          name
+          isAnimationStudio
+        }
+        isMain
+      }
+    }
+    characters {
+      edges {
+        id
+        role
+        node {
+          id
+          name {
+            first
+            last
+            full
+            native
+          }
+        }
+        voiceActors {
+          id
+          language
+          name {
+            first
+            last
+            full
+            native
+          }
+        }
+      }
+    }
+  }
+}
