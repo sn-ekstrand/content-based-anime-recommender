@@ -72,26 +72,10 @@ class Recommender():
 
     def get_recommendations(self, n=10):
         for pos in self._sims.argsort()[:-(n+1):-1]:
-            for title in self._title_df.iloc[pos,[1, 3]]:
-                self.recommendations.append(title)
+            self.recommendations.append(self.get_title_from_loc(pos))
         for title in self.recommendations:
             print(title)
         return self
-
-    # def get_top_n_recommendations(self, anime_id, dataframe, similarity_matrix, n=5):
-        # positional_idx = dataframe.index.get_loc(anime_id)
-        # 
-        # top_n = np.argsort(similarity_matrix[positional_idx,:])[-n-1:-1]
-        # recom_titles = []
-        # for idx, row in _title_df.iloc[top_n,:].iterrows():
-            # if type(row['english']) != float:
-                # recom_titles.append(row['english'])
-            # else:
-                # recom_titles.append(row['userPreferred'])
-        # 
-        # return recom_titles
-
-
 
 
     # helper functions
@@ -106,28 +90,16 @@ class Recommender():
         
         return title
 
-    def get_title_from_loc(self, loc):
+    def get_title_from_loc(self, pos):
             '''Searches the title dataframe based on the location in an array and tries to return the english title. 
             If an english title is not available, the "user preferred" is give. '''
             title = None
-            if pd.isna(self._title_df.iloc[self._title_df.index == loc, 'english']).values[0]:
-                title = self._title_df.iloc[self._title_df.index == loc, 'userPreferred'].values[0]
+            if pd.isna(self._title_df.iloc[pos, 1]):
+                title = self._title_df.iloc[pos, 3]
             else:
-                title = self._title_df.iloc[self._title_df.index == loc, 'english'].values[0]
+                title = self._title_df.iloc[pos, 1]
             
             return title
-
-    def view_features(self, search_term, df):
-        _id = self._title_df[self._title_df['userPreferred'] == search_term].index
-        _df = df.loc[_id,:]
-
-        return list(_df.loc[:, (_df != 0).any(axis=0)].columns)
-
-    def view_features_from_id(self, _id, _df):
-        single_show = _df.loc[_id,:]
-        
-        return set(single_show[single_show != 0].index)
-
 
 
 if __name__ == "__main__":
