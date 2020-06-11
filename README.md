@@ -21,7 +21,7 @@ When my data was still binary I was able to use cosine similarity and Jaccard in
 
 ## Exploring Dimensionality Reduction and Topics
 
-![PCA](https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/pca_chart.png> "PCA Comparison")
+![PCA](<https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/pca_chart.png> "PCA Comparison")
 
 ## Refining Results
 
