@@ -16,6 +16,11 @@ My initial instinct was to draw a cutoff point and say anything below 60 is a 0 
 
 ![anime_feature_counts](<https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/anime_feature_counts.png?raw=true> "Anime Feature Counts")
 
+<tr>
+    <td> <img src="https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/common_genres.png?raw=true" style="height: 500px;"/> </td>
+    <td> <img src="https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/common_tags.png?raw=true" style="height: 500px;"/> </td>
+    </tr>
+
 ## Initial Model
 
 When my data was still binary I was able to use cosine similarity and Jaccard index to measure the similarity between items but when I changed how I handled rank I could only use cosine similarity because Jaccard index requires binary data. Cosine measures the angle between items from the origin, giving a value of 1 for an angle of 0 degrees (same location) and a value of 0 for an angle of 180 degrees (opposite location). At this point we can get some recommendations for a single title by finding which items have the highest similarity scores.  
