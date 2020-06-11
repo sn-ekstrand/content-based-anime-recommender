@@ -1,23 +1,17 @@
 import pandas as pd
 import numpy as np
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pprint as pp
-
 import requests
 import json
-from difflib import get_close_matches
-from difflib import SequenceMatcher
 
 from sklearn.metrics.pairwise import cosine_similarity
 
 from scipy.spatial.distance import cosine
 
 
-
 class Recommender():
     def __init__(self):
+        '''initializes our dataframe and builds our necessary dataframes.'''
         self.id_list = []
         self.sims = None
         self.adjusted_score_df = pd.read_csv('data/adjusted_score_df.csv', index_col='id')
@@ -59,6 +53,11 @@ class Recommender():
         return self
 
     def _calc_similarities(self):
+        '''Performs our calculations. 
+        Looks at the id_list to calculate a mean vector.
+        Finds cosine similarity between mean vector and all items.
+        Reduces the similarity score based on item rating/popularity. 
+        Zeros out the similarity score for the mean vector and the item inputted.'''
         mean_vector = self.content_item_matrix.loc[self.id_list,:].mean(axis=0)
         sim_mat = cosine_similarity(self.content_item_matrix.append(mean_vector, ignore_index=True).values)
         adjusted_scores = round((self.adjusted_score_df['adjusted_score']), 4)
@@ -71,17 +70,18 @@ class Recommender():
         return self
 
     def get_recommendations(self, n=10):
+        '''Sorts the similarity scores to print out the top n titles. n is 10 by default.'''
         for pos in self._sims.argsort()[:-(n+1):-1]:
-            self.recommendations.append(self.get_title_from_loc(pos))
+            self.recommendations.append(self._get_title_from_loc(pos))
         for title in self.recommendations:
             print(title)
         return self
 
 
     # helper functions
-    def get_title_from_id(self, _id):
+    def _get_title_from_id(self, _id):
         '''Searches the title dataframe based on an anime id and tries to return the english title. 
-        If an english title is not available, the "user preferred" is give. '''
+        If an english title is not available, the "user preferred" title is given. '''
         title = None
         if pd.isna(self._title_df.loc[self._title_df.index == _id, 'english']).values[0]:
             title = self._title_df.loc[self._title_df.index == _id, 'userPreferred'].values[0]
@@ -90,9 +90,9 @@ class Recommender():
         
         return title
 
-    def get_title_from_loc(self, pos):
+    def _get_title_from_loc(self, pos):
             '''Searches the title dataframe based on the location in an array and tries to return the english title. 
-            If an english title is not available, the "user preferred" is give. '''
+            If an english title is not available, the "user preferred" title is given. '''
             title = None
             if pd.isna(self._title_df.iloc[pos, 1]):
                 title = self._title_df.iloc[pos, 3]
