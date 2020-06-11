@@ -17,8 +17,8 @@ My initial instinct was to draw a cutoff point and say anything below 60 is a 0 
 ![anime_feature_counts](<https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/anime_feature_counts.png?raw=true> "Anime Feature Counts")
 
 <p align="center">
-  <img height="400" src="https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/common_genres.png?raw=true">
-  <img height="400" src="https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/common_tags.png?raw=true">
+  <img height="600" src="https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/common_genres.png?raw=true">
+  <img height="600" src="https://github.com/sn-ekstrand/content-based-anime-recommender/blob/master/images/common_tags.png?raw=true">
 </p>
 
 ## Initial Model
